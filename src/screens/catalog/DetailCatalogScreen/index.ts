@@ -1,0 +1,1 @@
+export {DetailCatalogScreen} from './DetailCatalogScreen';

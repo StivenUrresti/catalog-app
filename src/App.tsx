@@ -1,12 +1,28 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+/* eslint-disable react/react-in-jsx-scope */
+import {NavigationContainer} from '@react-navigation/native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
+import StackNavigation from './navigation/stackNavigation';
+// import {Loading} from './components';
 
 const App = () => {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <GestureHandlerRootView style={style.container}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          {/* <Loading /> */}
+          <StackNavigation />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;
