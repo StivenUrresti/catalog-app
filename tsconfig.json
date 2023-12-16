@@ -1,11 +1,14 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
     "sourceMap": true,
     "inlineSources": true,
+    /* Enables platform specific extensions */
     "moduleSuffixes": [".ios", ".android", ""],
 
-    "skipLibCheck": true,
+    /* Completeness */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {

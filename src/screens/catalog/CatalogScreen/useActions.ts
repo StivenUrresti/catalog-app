@@ -1,7 +1,10 @@
+import {useGetAllArtworksQuery} from '@/api/catlogApi/catalogApi';
 import {addFavorite} from '@/slices/favoritesSlice';
 import {useDispatch} from 'react-redux';
 
 export const useActions = () => {
+  const {data: dataCatalog} = useGetAllArtworksQuery();
+  console.log('dataCatalog', dataCatalog);
   const data = [
     {
       id: 1,

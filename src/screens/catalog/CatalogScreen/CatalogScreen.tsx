@@ -9,6 +9,7 @@ import {Text} from '@react-native-material/core';
 import {colorsLight} from '@/theme/colorsLight';
 import {useActions} from './useActions';
 import {View} from 'react-native-ui-lib';
+import {HeartIcon, HeartOutlineIcon} from '@/assets/svg';
 
 export const CatalogScreen = () => {
   const {data, addToFavorites} = useActions();
@@ -26,6 +27,8 @@ export const CatalogScreen = () => {
               <Text color={colorsLight.BLACK} key={item.id}>
                 {item?.name}
               </Text>
+              <HeartOutlineIcon />
+              <HeartIcon />
             </TouchableOpacity>
           </View>
         )}

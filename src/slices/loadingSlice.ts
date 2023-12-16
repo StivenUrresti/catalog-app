@@ -1,19 +1,20 @@
+import {createSlice} from '@reduxjs/toolkit';
+import type {PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '@/libraries/redux';
-import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
-interface ILoadingSlice {
+interface ILoadingState {
   showLoading: boolean;
 }
 
-const initialState: ILoadingSlice = {
+const initialState: ILoadingState = {
   showLoading: false,
 };
 
-export const loadingSlice = createSlice({
+const loadingSlice = createSlice({
   name: 'loading',
   initialState,
   reducers: {
-    setShowLoading: (state, action: PayloadAction<boolean>) => {
+    setShowLoading(state, action: PayloadAction<boolean>) {
       state.showLoading = action.payload;
     },
   },
