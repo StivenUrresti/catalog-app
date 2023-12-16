@@ -1,11 +1,10 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Platform} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {View as UiLibView} from 'react-native-ui-lib';
 import {TabsHomeRoutes} from '@/types/tabRoutes';
 
 import {colorsLight} from '@/theme/colorsLight';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {DotIcon, FavoriteIcon} from '@/assets/svg';
+import {CatalogIcon, DotIcon, FavoriteIcon} from '@/assets/svg';
 
 export function CustomTabBar({
   state,
@@ -19,16 +18,16 @@ export function CustomTabBar({
   const getIcon = (key: string) => {
     switch (key) {
       case TabsHomeRoutes.CATALOG:
-        return <FavoriteIcon width={30} height={30} />;
+        return <CatalogIcon width={28} height={28} />;
       case TabsHomeRoutes.FAVORITES:
-        return <FavoriteIcon width={30} height={30} />;
+        return <FavoriteIcon width={28} height={28} />;
       default:
-        return <FavoriteIcon width={30} height={30} />;
+        return <FavoriteIcon width={28} height={28} />;
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={[styles.container]}>
       {state.routes.map((route: any, index: number) => {
         const {options} = descriptors[route.key];
         const isFocused = state.index === index;
@@ -67,7 +66,7 @@ export function CustomTabBar({
           </TouchableOpacity>
         );
       })}
-    </SafeAreaView>
+    </View>
   );
 }
 

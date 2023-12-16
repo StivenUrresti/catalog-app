@@ -4,14 +4,18 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
 import StackNavigation from './navigation/stackNavigation';
-// import {Loading} from './components';
+import {Loading} from './components';
+import store from './libraries/redux';
+import {loadFavoritesAsync} from './slices/favoritesSlice';
+
+store.dispatch(loadFavoritesAsync());
 
 const App = () => {
   return (
     <GestureHandlerRootView style={style.container}>
       <SafeAreaProvider>
         <NavigationContainer>
-          {/* <Loading /> */}
+          <Loading />
           <StackNavigation />
         </NavigationContainer>
       </SafeAreaProvider>
