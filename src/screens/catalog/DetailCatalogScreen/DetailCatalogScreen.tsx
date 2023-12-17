@@ -6,7 +6,7 @@ import {useActions} from './useActions';
 import FastImage from 'react-native-fast-image';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import HTML from 'react-native-render-html';
-import {Text} from '@react-native-material/core'; // Reemplaza 'tu-libreria-de-iconos' con la librería que estás utilizando
+import {Text} from '@react-native-material/core';
 import {HeartIcon, HeartOutlineIcon} from '@/assets/svg';
 import {View} from 'react-native-ui-lib';
 
