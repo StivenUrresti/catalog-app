@@ -80,6 +80,20 @@ export const DetailCatalogScreen = ({
           highlightColor={colorsLight.GRAY_02}>
           <>
             <Text style={styles.title}>{artWorkData?.data.title}</Text>
+            <Text style={styles.sectionTitle}>Description</Text>
+            {artWorkData?.data?.description &&
+            artWorkData?.data?.description?.length > 0 ? (
+              <View marginB-18>
+                <HTML
+                  source={{html: artWorkData?.data.description || ''}}
+                  tagsStyles={htmlStyles}
+                />
+              </View>
+            ) : (
+              <View marginB-18>
+                <Text style={styles.sectionValue}>No description</Text>
+              </View>
+            )}
             {renderSection(
               'Artist',
               artWorkData?.data.artist_display || 'No artist',
@@ -124,20 +138,6 @@ export const DetailCatalogScreen = ({
               'Themes',
               artWorkData?.data.theme_titles,
               'No Themes',
-            )}
-            <Text style={styles.sectionTitle}>Description</Text>
-            {artWorkData?.data?.description &&
-            artWorkData?.data?.description?.length > 0 ? (
-              <View marginB-18>
-                <HTML
-                  source={{html: artWorkData?.data.description || ''}}
-                  tagsStyles={htmlStyles}
-                />
-              </View>
-            ) : (
-              <View marginB-18>
-                <Text style={styles.sectionValue}>No description</Text>
-              </View>
             )}
           </>
         </SkeletonPlaceholder>
