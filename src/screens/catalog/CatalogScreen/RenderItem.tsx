@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     marginRight: 16,
+    fontStyle: 'normal',
   },
   imageContainer: {
     width: 90,
@@ -59,18 +60,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 4,
     color: colorsLight.BLACK,
+    fontStyle: 'normal',
   },
   indicatorText: {
     fontSize: 14,
     color: colorsLight.GRAY_03,
+    fontStyle: 'normal',
   },
   author: {
     fontSize: 16,
     color: colorsLight.BLACK,
+    fontStyle: 'normal',
   },
   reference: {
     fontSize: 15,
     color: '#555',
+    fontStyle: 'normal',
   },
 });
 

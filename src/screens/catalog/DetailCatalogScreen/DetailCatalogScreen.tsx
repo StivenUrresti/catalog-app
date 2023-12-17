@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colorsLight.BLACK,
     marginBottom: 8,
+    fontStyle: 'normal',
   },
   sectionContainer: {
     marginBottom: 16,
@@ -199,10 +200,12 @@ const styles = StyleSheet.create({
     color: colorsLight.GRAY_03,
     fontWeight: 'bold',
     marginBottom: 4,
+    fontStyle: 'normal',
   },
   sectionValue: {
     fontSize: 16,
     color: colorsLight.BLACK,
+    fontStyle: 'normal',
   },
   description: {
     fontSize: 16,
@@ -210,6 +213,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     marginTop: 16,
     textAlign: 'justify',
+    fontStyle: 'normal',
   },
   addButton: {
     backgroundColor: colorsLight.PRIMARY_COLOR,
@@ -223,10 +227,13 @@ const styles = StyleSheet.create({
     color: colorsLight.WHITE,
     fontSize: 16,
     fontWeight: 'bold',
+    fontStyle: 'normal',
   },
   containerFavorite: {justifyContent: 'space-between'},
   textFavorite: {
     fontSize: 16,
     color: colorsLight.BLACK,
+    fontStyle: 'normal',
+    fontWeight: '500',
   },
 });
