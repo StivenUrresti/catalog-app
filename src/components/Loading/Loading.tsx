@@ -2,11 +2,11 @@ import {ActivityIndicator, StyleSheet, Text} from 'react-native';
 import React from 'react';
 import {colorsLight} from '@/theme/colorsLight';
 import {Modal, View} from 'react-native-ui-lib';
-import {useSelector} from 'react-redux';
 import {selectLoading} from '@/slices/loadingSlice';
+import {useAppSelector} from '@/hooks/useRedux';
 
 export const Loading = () => {
-  const {showLoading} = useSelector(selectLoading);
+  const {showLoading} = useAppSelector(selectLoading);
   return (
     <Modal
       animationType="slide"

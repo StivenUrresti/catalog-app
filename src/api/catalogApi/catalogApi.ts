@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {API_BASE, apiBase, EReducersPath} from '@/utils/config';
+import {CatalogEntity} from './entities/catalogEntity';
 
 export const catalogApi = createApi({
   reducerPath: EReducersPath.CATALOG_API,
@@ -10,7 +11,7 @@ export const catalogApi = createApi({
     timeout: 30 * 1000,
   }),
   endpoints: build => ({
-    getAllArtworks: build.query<any, void>({
+    getAllArtworks: build.query<CatalogEntity, void>({
       query: () => `${apiBase.endpoints.getArtworks}?limit=10`,
     }),
   }),

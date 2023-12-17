@@ -1,44 +1,65 @@
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
 import {Text} from '@react-native-material/core';
-import {colorsLight} from '@/theme/colorsLight';
 import {useActions} from './useActions';
-import {View} from 'react-native-ui-lib';
-import {HeartIcon, HeartOutlineIcon} from '@/assets/svg';
+import {TouchableOpacity, View} from 'react-native-ui-lib';
+import FastImage from 'react-native-fast-image';
+import {colorsLight} from '@/theme/colorsLight';
 
 export const CatalogScreen = () => {
-  const {data, addToFavorites} = useActions();
+  const {fetchingDataCatalog, dataCatalog} = useActions();
+
   return (
-    <SafeAreaView>
-      <Text color={colorsLight.BLACK}>CatalogScreen</Text>
-      <FlatList
-        data={data}
-        keyExtractor={({index}: any) => `${index + Math.random().toString()} `}
-        renderItem={({item}: any) => (
-          <View key={item.id} center>
-            <TouchableOpacity
-              style={styles.touchable}
-              onPress={() => addToFavorites(item)}>
-              <Text color={colorsLight.BLACK} key={item.id}>
-                {item?.name}
-              </Text>
-              <HeartOutlineIcon />
-              <HeartIcon />
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+    <SafeAreaView style={styles.container}>
+      {!fetchingDataCatalog && (
+        <View padding-16>
+          <Text style={styles.title}>list of artworks</Text>
+          <FlatList
+            data={dataCatalog?.data}
+            keyExtractor={item => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => (
+              <TouchableOpacity marginV-10 row gap style={styles.content}>
+                <FastImage
+                  source={{
+                    uri: `https://www.artic.edu/iiif/2/${item.image_id}/full/843,/0/default.jpg`,
+                  }}
+                  style={styles.img}
+                />
+                <View>
+                  <Text>{item.title}</Text>
+                  <Text>{item.artist_title}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  touchable: {
-    marginVertical: 10,
+  container: {
+    flex: 1,
+  },
+  img: {
+    width: 100,
+    height: 100,
+    borderRadius: 20,
+  },
+  titleItem: {
+    textAlign: 'center',
+  },
+  content: {
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: colorsLight.GRAY_03,
+    padding: 10,
+    borderRadius: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '900',
   },
 });

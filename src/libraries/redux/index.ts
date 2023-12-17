@@ -2,7 +2,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/query';
 import loading from '@/slices/loadingSlice';
 import favorites from '@/slices/favoritesSlice';
-import {catalogApi} from '@/api/catlogApi/catalogApi';
+import {catalogApi} from '@/api/catalogApi/catalogApi';
 
 const store = configureStore({
   reducer: {

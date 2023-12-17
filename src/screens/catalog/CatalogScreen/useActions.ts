@@ -1,38 +1,27 @@
-import {useGetAllArtworksQuery} from '@/api/catlogApi/catalogApi';
+import {useGetAllArtworksQuery} from '@/api/catalogApi/catalogApi';
+import {useAppDispatch} from '@/hooks/useRedux';
 import {addFavorite} from '@/slices/favoritesSlice';
-import {useDispatch} from 'react-redux';
+import {setShowLoading} from '@/slices/loadingSlice';
+import {useEffect} from 'react';
 
 export const useActions = () => {
-  const {data: dataCatalog} = useGetAllArtworksQuery();
-  console.log('dataCatalog', dataCatalog);
-  const data = [
-    {
-      id: 1,
-      name: 'test',
-      description: 'test',
-    },
-    {
-      id: 2,
-      name: 'test2',
-      description: 'test2',
-    },
-    {
-      id: 3,
-      name: 'test3',
-      description: 'test3',
-    },
-    {
-      id: 4,
-      name: 'test4',
-      description: 'test4',
-    },
-  ];
+  const {data: dataCatalog, isFetching: fetchingDataCatalog} =
+    useGetAllArtworksQuery();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (fetchingDataCatalog) {
+      dispatch(setShowLoading(true));
+    } else {
+      dispatch(setShowLoading(false));
+    }
+  }, [fetchingDataCatalog, dispatch]);
+  console.log('dataCatalog', JSON.stringify(dataCatalog?.data));
 
   const addToFavorites = (item: any) => {
     dispatch(addFavorite(item));
   };
 
-  return {data, addToFavorites};
+  return {dataCatalog, fetchingDataCatalog, addToFavorites};
 };
