@@ -19,7 +19,6 @@ export const useActions = () => {
       dispatch(setShowLoading(false));
     }
   }, [fetchingDataCatalog, dispatch]);
-  console.log('dataCatalog', JSON.stringify(dataCatalog?.data));
 
   const addToFavorites = (item: any) => {
     dispatch(addFavorite(item));

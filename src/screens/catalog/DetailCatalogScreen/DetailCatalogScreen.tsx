@@ -30,7 +30,6 @@ export const DetailCatalogScreen = ({
     p: {
       color: colorsLight.BLACK,
     },
-    h1: {color: colorsLight.BLACK},
   };
 
   return (

@@ -12,8 +12,7 @@ export const catalogApi = createApi({
   }),
   endpoints: build => ({
     getAllArtworks: build.query<CatalogEntity, void>({
-      query: () =>
-        `${apiBase.endpoints.getArtworks}?fields=id,title,artist_display,date_display,image_id,?limit=10`,
+      query: () => `${apiBase.endpoints.getArtworks}?limit=100`,
     }),
     getArtWorksByCategory: build.query<ArtWorkEntity, number>({
       query: id =>

@@ -27,6 +27,7 @@ export const CatalogScreen = () => {
             keyExtractor={item => item.id.toString()}
             showsVerticalScrollIndicator={false}
             renderItem={RenderItems}
+            ListFooterComponent={<View height={80} />}
           />
         </View>
       )}

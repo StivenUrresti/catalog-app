@@ -13,7 +13,7 @@ export const FavoritesScreen = () => {
       <Text color={colorsLight.BLACK}>FavoritesScreen</Text>
       {favoritesData.map(e => (
         <Text key={e.id} color={colorsLight.BLACK}>
-          {e.name}
+          {e.title}
         </Text>
       ))}
     </SafeAreaView>

@@ -1,9 +1,10 @@
+import {IArtWorkEntity} from '@/api/catalogApi/entities/catalogEntity';
 import {RootState} from '@/libraries/redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createSlice} from '@reduxjs/toolkit';
 
 interface IFavoritesSlice {
-  favoritesData: any[];
+  favoritesData: IArtWorkEntity[];
   isInFavorites: boolean;
 }
 
