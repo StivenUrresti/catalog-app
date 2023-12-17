@@ -1,4 +1,5 @@
 import {useGetArtWorksByCategoryQuery} from '@/api/catalogApi/catalogApi';
+import {useState} from 'react';
 
 interface IUseActions {
   idArt: number;
@@ -6,6 +7,12 @@ interface IUseActions {
 
 export const useActions = ({idArt}: IUseActions) => {
   const {data: artWorkData, isFetching} = useGetArtWorksByCategoryQuery(idArt);
+  const [like, setLike] = useState(false);
 
-  return {artWorkData, isFetching};
+  const handleLike = () => {
+    setLike(!like);
+  };
+  console.log('artWorkData', JSON.stringify(artWorkData));
+
+  return {artWorkData, isFetching, like, handleLike};
 };

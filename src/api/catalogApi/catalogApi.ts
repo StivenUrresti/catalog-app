@@ -17,7 +17,11 @@ export const catalogApi = createApi({
     }),
     getArtWorksByCategory: build.query<ArtWorkEntity, number>({
       query: id =>
-        `${apiBase.endpoints.getArtworks}/${id}?fields=id,title,artist_display,date_display,image_id,place_of_origin`,
+        `${apiBase.endpoints.getArtworks}/${id}
+        ?fields=id,title,artist_display,date_display,image_id,
+        place_of_origin,main_reference_number,place_of_origin,description,
+        dimensions,medium_display,category_titles,
+        artist_title,theme_titles,artwork_type_title,department_title,term_titles,copyright_notice`,
     }),
   }),
 });

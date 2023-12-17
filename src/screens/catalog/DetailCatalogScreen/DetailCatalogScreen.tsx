@@ -1,18 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {colorsLight} from '@/theme/colorsLight';
 import {RootStackRoutes, RootStackScreenProps} from '@/types/stackRoutes';
 import {useActions} from './useActions';
 import FastImage from 'react-native-fast-image';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import HTML from 'react-native-render-html';
+import {Text} from '@react-native-material/core'; // Reemplaza 'tu-libreria-de-iconos' con la librería que estás utilizando
+import {HeartIcon, HeartOutlineIcon} from '@/assets/svg';
+import {View} from 'react-native-ui-lib';
 
 export const DetailCatalogScreen = ({
   route: {
     params: {idArt},
   },
 }: RootStackScreenProps<RootStackRoutes.DETAIL_CATALOG_SCREEN>) => {
-  const {artWorkData, isFetching} = useActions({idArt});
+  const {artWorkData, isFetching, like, handleLike} = useActions({idArt});
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
@@ -21,50 +24,149 @@ export const DetailCatalogScreen = ({
     }
   }, [isFetching]);
 
+  const htmlStyles = {
+    p: {
+      color: colorsLight.BLACK,
+    },
+    h1: {color: colorsLight.BLACK},
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View>
-          <SkeletonPlaceholder
-            speed={900}
-            enabled={loadingSkeleton}
-            backgroundColor={colorsLight.GRAY_02}
-            highlightColor={colorsLight.INFO_COLOR}>
-            <FastImage
-              source={{
-                uri: `https://www.artic.edu/iiif/2/${artWorkData?.data.image_id}/full/843,/0/default.jpg`,
-              }}
-              style={styles.image}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-          </SkeletonPlaceholder>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+      <View>
+        <SkeletonPlaceholder
+          speed={900}
+          enabled={loadingSkeleton}
+          backgroundColor={colorsLight.WHITE}
+          highlightColor={colorsLight.GRAY_02}>
+          <FastImage
+            source={{
+              uri: `https://www.artic.edu/iiif/2/${artWorkData?.data.image_id}/full/843,/0/default.jpg`,
+            }}
+            style={styles.image}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </SkeletonPlaceholder>
+      </View>
+      <SkeletonPlaceholder
+        speed={900}
+        enabled={loadingSkeleton}
+        backgroundColor={colorsLight.WHITE}
+        highlightColor={colorsLight.GRAY_02}>
+        <View
+          row
+          centerV
+          marginV-16
+          paddingH-16
+          style={styles.containerFavorite}>
+          <Text style={styles.textFavorite}>Add to Favorites</Text>
+          <TouchableOpacity onPress={handleLike}>
+            {like ? <HeartIcon /> : <HeartOutlineIcon />}
+          </TouchableOpacity>
         </View>
-        <View style={styles.detailsContainer}>
-          <SkeletonPlaceholder
-            speed={900}
-            enabled={loadingSkeleton}
-            backgroundColor={colorsLight.GRAY_LIGHT}
-            highlightColor={colorsLight.GRAY_03}>
-            <>
-              <Text style={styles.title}>{artWorkData?.data.title}</Text>
-              <Text style={styles.subtitle}>
-                {artWorkData?.data.artist_display || 'no artist'}
-              </Text>
-              <Text style={styles.description}>
-                {artWorkData?.data.description || 'No description'}
-              </Text>
-            </>
-          </SkeletonPlaceholder>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      </SkeletonPlaceholder>
+      <View style={styles.detailsContainer}>
+        <SkeletonPlaceholder
+          speed={900}
+          enabled={loadingSkeleton}
+          backgroundColor={colorsLight.WHITE}
+          highlightColor={colorsLight.GRAY_02}>
+          <>
+            <Text style={styles.title}>{artWorkData?.data.title}</Text>
+            {renderSection(
+              'Artist',
+              artWorkData?.data.artist_display || 'No artist',
+              1,
+            )}
+            {renderSection(
+              'Place of Origin',
+              artWorkData?.data.place_of_origin || 'No origin',
+              2,
+            )}
+            {renderSection(
+              'Medium',
+              artWorkData?.data.medium_display || 'No medium',
+              3,
+            )}
+            {renderSection(
+              'Artwork Type',
+              artWorkData?.data?.artwork_type_title || 'No artwork type',
+              4,
+            )}
+            {renderSection(
+              'Copyright Notice',
+              artWorkData?.data?.copyright_notice || 'No copyright notice',
+              5,
+            )}
+            {renderSection(
+              'Department',
+              artWorkData?.data?.department_title || 'No department',
+              6,
+            )}
+            {renderListSection(
+              'Categories',
+              artWorkData?.data.category_titles,
+              'No Categories',
+            )}
+            {renderListSection(
+              'Terms',
+              artWorkData?.data.term_titles,
+              'No Terms',
+            )}
+            {renderListSection(
+              'Themes',
+              artWorkData?.data.theme_titles,
+              'No Themes',
+            )}
+            <Text style={styles.sectionTitle}>Description</Text>
+            {artWorkData?.data?.description &&
+            artWorkData?.data?.description?.length > 0 ? (
+              <View marginB-18>
+                <HTML
+                  source={{html: artWorkData?.data.description || ''}}
+                  tagsStyles={htmlStyles}
+                />
+              </View>
+            ) : (
+              <View marginB-18>
+                <Text style={styles.sectionValue}>No description</Text>
+              </View>
+            )}
+          </>
+        </SkeletonPlaceholder>
+      </View>
+    </ScrollView>
   );
 };
 
+const renderSection = (title: string, value: string, key: number) => (
+  <View key={key} style={styles.sectionContainer}>
+    <Text style={styles.sectionTitle}>{title}</Text>
+    <Text style={styles.sectionValue}>{value}</Text>
+  </View>
+);
+
+const renderListSection = (
+  title: string,
+  list: string[] | undefined,
+  emptyMessage: string,
+) => (
+  <View style={styles.sectionContainer}>
+    <Text style={styles.sectionTitle}>{title}</Text>
+    {list && list.length > 0 ? (
+      list.map((item: any, index: number) => (
+        <Text key={index} style={styles.sectionValue}>{`* ${item}`}</Text>
+      ))
+    ) : (
+      <Text style={styles.sectionValue}>{emptyMessage}</Text>
+    )}
+  </View>
+);
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: colorsLight.WHITE,
+    flex: 1,
   },
   image: {
     width: '100%',
@@ -73,7 +175,8 @@ const styles = StyleSheet.create({
     backgroundColor: colorsLight.PRIMARY_COLOR,
   },
   detailsContainer: {
-    padding: 16,
+    paddingHorizontal: 16,
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
@@ -81,15 +184,42 @@ const styles = StyleSheet.create({
     color: colorsLight.BLACK,
     marginBottom: 8,
   },
-  subtitle: {
+  sectionContainer: {
+    marginBottom: 16,
+  },
+  sectionTitle: {
     fontSize: 18,
     color: colorsLight.GRAY_03,
-    marginBottom: 12,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  sectionValue: {
+    fontSize: 16,
+    color: colorsLight.BLACK,
   },
   description: {
     fontSize: 16,
     color: colorsLight.BLACK,
     lineHeight: 24,
+    marginTop: 16,
+    textAlign: 'justify',
   },
-  // Añade más estilos según sea necesario
+  addButton: {
+    backgroundColor: colorsLight.PRIMARY_COLOR,
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 16,
+    marginBottom: 20,
+  },
+  addButtonText: {
+    color: colorsLight.WHITE,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  containerFavorite: {justifyContent: 'space-between'},
+  textFavorite: {
+    fontSize: 16,
+    color: colorsLight.BLACK,
+  },
 });
