@@ -9,6 +9,7 @@ export interface DataCatalogEntity {
   date_display: string;
   artist_display: string;
   image_id: string;
+  place_of_origin: string;
 }
 
 export interface PaginationEntity {

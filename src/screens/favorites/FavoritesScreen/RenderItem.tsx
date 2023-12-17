@@ -1,8 +1,8 @@
 import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
-import {colorsLight} from '@/theme/colorsLight';
+import {HeartIcon} from '@/assets/svg';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import FastImage from 'react-native-fast-image';
+import FastImage from 'react-native-fast-image'; // Asegúrate de tener instalada la biblioteca correspondiente
 import {useActions} from './useActions';
 
 interface Props {
@@ -10,18 +10,11 @@ interface Props {
 }
 
 const RenderItem = ({item}: Props) => {
-  const {goToDetail} = useActions();
+  const {handleDislike, goToDetailScreen} = useActions();
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => goToDetail(item.id)}>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.indicatorText}>{'Artist: '}</Text>
-        <Text style={styles.author}>{item.artist_display}</Text>
-        <Text style={styles.indicatorText}>{'Place Origin: '}</Text>
-        <Text style={styles.author}>{item.place_of_origin || 'No Place'}</Text>
-      </View>
+      onPress={() => goToDetailScreen(item.id)}>
       <View style={styles.imageContainer}>
         <FastImage
           source={{
@@ -30,6 +23,18 @@ const RenderItem = ({item}: Props) => {
           style={styles.image}
           resizeMode={FastImage.resizeMode.cover}
         />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.indicatorText}>{'Artist: '}</Text>
+        <Text style={styles.author}>{item.artist_display}</Text>
+      </View>
+      <View style={styles.likeIconContainer}>
+        <TouchableOpacity
+          style={styles.likeIcon}
+          onPress={() => handleDislike(item.id)}>
+          <HeartIcon />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -45,15 +50,23 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    marginRight: 16,
+    marginLeft: 16,
+    paddingRight: 24, // Añadido espacio a la derecha del texto
     fontStyle: 'normal',
   },
   imageContainer: {
-    width: 90,
+    position: 'relative',
+    width: 120,
     height: 90,
     borderRadius: 12,
     overflow: 'hidden',
   },
+  likeIconContainer: {
+    position: 'absolute',
+    top: 18,
+    right: 8,
+  },
+  likeIcon: {},
   image: {
     flex: 1,
   },
@@ -61,22 +74,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 4,
-    color: colorsLight.BLACK,
+    color: '#333',
     fontStyle: 'normal',
   },
   indicatorText: {
     fontSize: 14,
-    color: colorsLight.GRAY_03,
+    color: '#555',
     fontStyle: 'normal',
   },
   author: {
     fontSize: 16,
-    color: colorsLight.BLACK,
+    color: '#555',
     fontStyle: 'normal',
   },
   reference: {
     fontSize: 15,
-    color: '#555',
+    color: '#777',
     fontStyle: 'normal',
   },
 });
