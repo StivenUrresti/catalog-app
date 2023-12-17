@@ -15,7 +15,9 @@ export const DetailCatalogScreen = ({
     params: {idArt},
   },
 }: RootStackScreenProps<RootStackRoutes.DETAIL_CATALOG_SCREEN>) => {
-  const {artWorkData, isFetching, like, handleLike} = useActions({idArt});
+  const {artWorkData, isFetching, like, handleLike, handleDislike} = useActions(
+    {idArt},
+  );
   const [loadingSkeleton, setLoadingSkeleton] = useState(true);
 
   useEffect(() => {
@@ -60,9 +62,15 @@ export const DetailCatalogScreen = ({
           paddingH-16
           style={styles.containerFavorite}>
           <Text style={styles.textFavorite}>Add to Favorites</Text>
-          <TouchableOpacity onPress={handleLike}>
-            {like ? <HeartIcon /> : <HeartOutlineIcon />}
-          </TouchableOpacity>
+          {!like ? (
+            <TouchableOpacity onPress={() => handleLike(artWorkData?.data)}>
+              <HeartOutlineIcon />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => handleDislike()}>
+              <HeartIcon />
+            </TouchableOpacity>
+          )}
         </View>
       </SkeletonPlaceholder>
       <View style={styles.detailsContainer}>

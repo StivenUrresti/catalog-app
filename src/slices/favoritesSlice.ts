@@ -4,10 +4,12 @@ import {createSlice} from '@reduxjs/toolkit';
 
 interface IFavoritesSlice {
   favoritesData: any[];
+  isInFavorites: boolean;
 }
 
 const initialState: IFavoritesSlice = {
   favoritesData: [],
+  isInFavorites: false,
 };
 
 export const favoritesSlice = createSlice({
@@ -32,12 +34,18 @@ export const favoritesSlice = createSlice({
     loadFavorites: (state, action) => {
       state.favoritesData = action.payload;
     },
+    checkIsInFavorites: (state, action) => {
+      state.isInFavorites = state.favoritesData.some(
+        favorite => favorite.id === action.payload,
+      );
+    },
   },
 });
 
-export const {addFavorite, removeFavorite, loadFavorites} =
+export const {addFavorite, removeFavorite, loadFavorites, checkIsInFavorites} =
   favoritesSlice.actions;
 export const selectFavorites = (state: RootState) => state.favorites;
+
 export const loadFavoritesAsync = () => async (dispatch: any) => {
   try {
     const favoritesString = await AsyncStorage.getItem('favorites');

@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 
 export const FavoritesScreen = () => {
   const {favoritesData} = useSelector(selectFavorites);
-  console.log('favoritesData', favoritesData);
+  console.log('favoritesData', JSON.stringify(favoritesData));
   return (
     <SafeAreaView>
       <Text color={colorsLight.BLACK}>FavoritesScreen</Text>
