@@ -8,6 +8,27 @@ export interface DataCatalogEntity {
   title: string;
   date_display: string;
   artist_display: string;
+  image_id: string;
+}
+
+export interface PaginationEntity {
+  total: number;
+  limit: number;
+  offset: number;
+  total_pages: number;
+  current_page: number;
+  next_url: string;
+}
+
+export interface ArtWorkEntity {
+  data: IArtWorkEntity;
+}
+
+export interface IArtWorkEntity {
+  id: number;
+  title: string;
+  date_display: string;
+  artist_display: string;
   main_reference_number: string;
   place_of_origin: string;
   description: string;
@@ -21,13 +42,4 @@ export interface DataCatalogEntity {
   term_titles: string[];
   theme_titles: string[];
   image_id: string;
-}
-
-export interface PaginationEntity {
-  total: number;
-  limit: number;
-  offset: number;
-  total_pages: number;
-  current_page: number;
-  next_url: string;
 }

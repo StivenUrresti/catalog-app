@@ -8,7 +8,7 @@ export enum RootStackRoutes {
 }
 
 export type RootStackParamList = {
-  [RootStackRoutes.DETAIL_CATALOG_SCREEN]: undefined;
+  [RootStackRoutes.DETAIL_CATALOG_SCREEN]: {idArt: number};
 
   [RootStackRoutes.TABS_HOME]: NavigatorScreenParams<TabsHomeParamList>;
 };
