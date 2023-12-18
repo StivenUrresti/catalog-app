@@ -25,9 +25,9 @@ export const CatalogScreen = () => {
     <SafeAreaView style={styles.container}>
       <View centerH paddingH-16 marginV-14>
         <Text style={styles.title}>List of Artworks</Text>
-        <SearchBar placeholder="buscar" />
+        <SearchBar placeholder="buscar" style={styles.search} />
       </View>
-      <View flex-1 padding-16>
+      <View flex-1 paddingH-16>
         <FlatList
           data={itemsArtWork}
           keyExtractor={item => item.id.toString()}
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     color: colorsLight.PRIMARY_COLOR,
   },
   search: {
-    marginVertical: 20,
+    width: '90%',
   },
 });
 

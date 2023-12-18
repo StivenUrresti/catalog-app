@@ -47,7 +47,7 @@ export const DetailCatalogScreen = ({
               uri: `https://www.artic.edu/iiif/2/${artWorkData?.data.image_id}/full/843,/0/default.jpg`,
             }}
             style={styles.image}
-            resizeMode={FastImage.resizeMode.cover}
+            resizeMode={FastImage.resizeMode.stretch}
           />
         </SkeletonPlaceholder>
       </View>
@@ -57,7 +57,7 @@ export const DetailCatalogScreen = ({
           enabled={loadingSkeleton}
           backgroundColor={colorsLight.GRAY_02}
           highlightColor={colorsLight.GRAY_05}>
-          <View row marginV-16 style={styles.containerFavorite}>
+          <View row marginV-10 style={styles.containerFavorite}>
             <Text
               color={!like ? colorsLight.BLACK : colorsLight.ERROR}
               style={styles.textFavorite}>
@@ -180,8 +180,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 300,
-    resizeMode: 'cover',
+    height: 400,
     backgroundColor: colorsLight.PRIMARY_COLOR,
   },
   detailsContainer: {
@@ -231,7 +230,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
   },
   containerFavorite: {
-    paddingBottom: 16,
     alignItems: 'center',
     alignContent: 'center',
     alignSelf: 'flex-end',

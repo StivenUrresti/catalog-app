@@ -20,7 +20,7 @@ export const SearchBar = ({placeholder, onChangeText, value, style}: Props) => {
       width="100%"
       height={42}
       style={[styles.containerInput, style]}>
-      <SearchIcon />
+      <SearchIcon color={colorsLight.GRAY_03} />
       <TextInput
         placeholder={placeholder}
         style={styles.input}

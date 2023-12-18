@@ -29,7 +29,7 @@ const RenderItem = ({item}: Props) => {
             uri: `https://www.artic.edu/iiif/2/${item.image_id}/full/843,/0/default.jpg`,
           }}
           style={styles.image}
-          resizeMode={FastImage.resizeMode.cover}
+          resizeMode={FastImage.resizeMode.stretch}
         />
       </View>
     </TouchableOpacity>
