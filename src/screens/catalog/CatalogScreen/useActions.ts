@@ -13,6 +13,7 @@ export const useActions = () => {
   const {navigate} = useNavigation();
   const [pageArtWorks, setPageArtWorks] = useState(1);
   const [itemsArtWork, setItemsArtWork] = useState<any[]>([]);
+  const [isChanging, setIsChanging] = useState(false);
 
   const [triggerArtWorks, {isLoading: isLoadingArtworkData}] =
     useLazyGetAllArtworksQuery();
@@ -42,6 +43,7 @@ export const useActions = () => {
     if (isLoadingArtworkData) {
       return;
     }
+    setIsChanging(true);
     setPageArtWorks(pageArtWorks + 1);
   };
 
@@ -67,6 +69,7 @@ export const useActions = () => {
   return {
     itemsArtWork,
     isLoadingArtworkData,
+    isChanging,
     addToFavorites,
     goToDetail,
     handleNextArtWork,

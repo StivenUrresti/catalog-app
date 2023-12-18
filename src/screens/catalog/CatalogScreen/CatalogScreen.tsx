@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
-import {Text} from '@react-native-material/core';
+import {ActivityIndicator, Text} from '@react-native-material/core';
 import {useActions} from './useActions';
 import {colorsLight} from '@/theme/colorsLight';
 import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
@@ -13,6 +13,7 @@ export const CatalogScreen = () => {
   const {
     isLoadingArtworkData,
     itemsArtWork,
+    isChanging,
     handleNextArtWork,
     handleRefreshArtWorks,
     handleScroll,
@@ -39,7 +40,13 @@ export const CatalogScreen = () => {
           onEndReachedThreshold={0.7}
           renderItem={RenderItems}
           onScroll={handleScroll}
-          ListFooterComponent={<View height={80} />}
+          ListFooterComponent={
+            <View marginV-6>
+              {isChanging && (
+                <ActivityIndicator size={35} color={colorsLight.GRAY_03} />
+              )}
+            </View>
+          }
         />
       </View>
     </SafeAreaView>
