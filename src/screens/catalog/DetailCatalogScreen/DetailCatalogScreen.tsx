@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   textFavorite: {
-    fontSize: 18,
+    fontSize: 16,
     fontStyle: 'normal',
     marginRight: 8,
   },

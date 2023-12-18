@@ -30,7 +30,7 @@ export const CatalogScreen = () => {
       <View flex-1 paddingH-16>
         <FlatList
           data={itemsArtWork}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item: any, index: number) => (index + item).toString()}
           showsVerticalScrollIndicator={false}
           refreshing={isLoadingArtworkData}
           onRefresh={handleRefreshArtWorks}
