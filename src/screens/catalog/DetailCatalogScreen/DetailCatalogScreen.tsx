@@ -42,13 +42,21 @@ export const DetailCatalogScreen = ({
           enabled={loadingSkeleton}
           backgroundColor={colorsLight.GRAY_02}
           highlightColor={colorsLight.GRAY_05}>
-          <FastImage
-            source={{
-              uri: `https://www.artic.edu/iiif/2/${artWorkData?.data.image_id}/full/843,/0/default.jpg`,
-            }}
-            style={styles.image}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
+          {artWorkData?.data.image_id ? (
+            <FastImage
+              source={{
+                uri: `https://www.artic.edu/iiif/2/${artWorkData?.data.image_id}/full/843,/0/default.jpg`,
+              }}
+              style={styles.image}
+              resizeMode={FastImage.resizeMode.stretch}
+            />
+          ) : (
+            <FastImage
+              source={require('@/assets/img/empty_img_four.png')}
+              style={styles.image}
+              resizeMode={FastImage.resizeMode.stretch}
+            />
+          )}
         </SkeletonPlaceholder>
       </View>
       <View paddingH-16>
@@ -181,7 +189,6 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 400,
-    backgroundColor: colorsLight.PRIMARY_COLOR,
   },
   detailsContainer: {
     marginBottom: 20,

@@ -24,13 +24,22 @@ const RenderItem = ({item}: Props) => {
         <Text style={styles.author}>{item.place_of_origin || 'No Place'}</Text>
       </View>
       <View style={styles.imageContainer}>
-        <FastImage
-          source={{
-            uri: `https://www.artic.edu/iiif/2/${item.image_id}/full/843,/0/default.jpg`,
-          }}
-          style={styles.image}
-          resizeMode={FastImage.resizeMode.stretch}
-        />
+        {item.image_id ? (
+          <FastImage
+            source={{
+              uri: `https://www.artic.edu/iiif/2/${item.image_id}/full/843,/0/default.jpg`,
+              priority: FastImage.priority.normal,
+            }}
+            style={styles.image}
+            resizeMode={FastImage.resizeMode.stretch}
+          />
+        ) : (
+          <FastImage
+            source={require('@/assets/img/empty_img_four.png')}
+            style={styles.image}
+            resizeMode={FastImage.resizeMode.stretch}
+          />
+        )}
       </View>
     </TouchableOpacity>
   );

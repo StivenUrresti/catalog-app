@@ -16,13 +16,22 @@ const RenderItem = ({item}: Props) => {
       style={styles.container}
       onPress={() => goToDetailScreen(item.id)}>
       <View style={styles.imageContainer}>
-        <FastImage
-          source={{
-            uri: `https://www.artic.edu/iiif/2/${item.image_id}/full/843,/0/default.jpg`,
-          }}
-          style={styles.image}
-          resizeMode={FastImage.resizeMode.cover}
-        />
+        {item.image_id ? (
+          <FastImage
+            source={{
+              uri: `https://www.artic.edu/iiif/2/${item.image_id}/full/843,/0/default.jpg`,
+              priority: FastImage.priority.normal,
+            }}
+            style={styles.image}
+            resizeMode={FastImage.resizeMode.stretch}
+          />
+        ) : (
+          <FastImage
+            source={require('@/assets/img/empty_img_four.png')}
+            style={styles.image}
+            resizeMode={FastImage.resizeMode.stretch}
+          />
+        )}
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
@@ -56,7 +65,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     position: 'relative',
-    width: 120,
+    width: 100,
     height: 90,
     borderRadius: 12,
     overflow: 'hidden',
