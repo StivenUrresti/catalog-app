@@ -13,6 +13,7 @@ const RenderItem = ({item}: Props) => {
   const {goToDetail} = useActions();
   return (
     <TouchableOpacity
+      key={item.id}
       style={styles.container}
       onPress={() => goToDetail(item.id)}>
       <View style={styles.textContainer}>

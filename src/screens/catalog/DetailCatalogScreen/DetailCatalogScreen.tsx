@@ -36,10 +36,12 @@ export const DetailCatalogScreen = ({
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View>
         <SkeletonPlaceholder
-          speed={900}
+          direction="right"
+          angle={0.5}
+          speed={800}
           enabled={loadingSkeleton}
-          backgroundColor={colorsLight.WHITE}
-          highlightColor={colorsLight.GRAY_02}>
+          backgroundColor={colorsLight.GRAY_02}
+          highlightColor={colorsLight.GRAY_05}>
           <FastImage
             source={{
               uri: `https://www.artic.edu/iiif/2/${artWorkData?.data.image_id}/full/843,/0/default.jpg`,
@@ -49,98 +51,97 @@ export const DetailCatalogScreen = ({
           />
         </SkeletonPlaceholder>
       </View>
-      <SkeletonPlaceholder
-        speed={900}
-        enabled={loadingSkeleton}
-        backgroundColor={colorsLight.WHITE}
-        highlightColor={colorsLight.GRAY_02}>
-        <View
-          row
-          centerV
-          marginV-16
-          paddingH-16
-          style={styles.containerFavorite}>
-          <Text style={styles.textFavorite}>Add to Favorites</Text>
-          {!like ? (
-            <TouchableOpacity onPress={() => handleLike(artWorkData?.data)}>
-              <HeartOutlineIcon />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => handleDislike()}>
-              <HeartIcon />
-            </TouchableOpacity>
-          )}
-        </View>
-      </SkeletonPlaceholder>
-      <View style={styles.detailsContainer}>
+      <View paddingH-16>
         <SkeletonPlaceholder
-          speed={900}
+          speed={800}
           enabled={loadingSkeleton}
-          backgroundColor={colorsLight.WHITE}
-          highlightColor={colorsLight.GRAY_02}>
-          <>
-            <Text style={styles.title}>{artWorkData?.data.title}</Text>
-            <Text style={styles.sectionTitle}>Description</Text>
-            {artWorkData?.data?.description &&
-            artWorkData?.data?.description?.length > 0 ? (
-              <View marginB-18>
-                <HTML
-                  source={{html: artWorkData?.data.description || ''}}
-                  tagsStyles={htmlStyles}
-                />
-              </View>
+          backgroundColor={colorsLight.GRAY_02}
+          highlightColor={colorsLight.GRAY_05}>
+          <View row centerV marginV-16 style={styles.containerFavorite}>
+            <Text style={styles.textFavorite}>
+              {!like ? 'Add to Favorites' : 'It likes you'}
+            </Text>
+            {!like ? (
+              <TouchableOpacity onPress={() => handleLike(artWorkData?.data)}>
+                <HeartOutlineIcon />
+              </TouchableOpacity>
             ) : (
-              <View marginB-18>
-                <Text style={styles.sectionValue}>No description</Text>
-              </View>
+              <TouchableOpacity onPress={() => handleDislike()}>
+                <HeartIcon />
+              </TouchableOpacity>
             )}
-            {renderSection(
-              'Artist',
-              artWorkData?.data.artist_display || 'No artist',
-              1,
-            )}
-            {renderSection(
-              'Place of Origin',
-              artWorkData?.data.place_of_origin || 'No origin',
-              2,
-            )}
-            {renderSection(
-              'Medium',
-              artWorkData?.data.medium_display || 'No medium',
-              3,
-            )}
-            {renderSection(
-              'Artwork Type',
-              artWorkData?.data?.artwork_type_title || 'No artwork type',
-              4,
-            )}
-            {renderSection(
-              'Copyright Notice',
-              artWorkData?.data?.copyright_notice || 'No copyright notice',
-              5,
-            )}
-            {renderSection(
-              'Department',
-              artWorkData?.data?.department_title || 'No department',
-              6,
-            )}
-            {renderListSection(
-              'Categories',
-              artWorkData?.data.category_titles,
-              'No Categories',
-            )}
-            {renderListSection(
-              'Terms',
-              artWorkData?.data.term_titles,
-              'No Terms',
-            )}
-            {renderListSection(
-              'Themes',
-              artWorkData?.data.theme_titles,
-              'No Themes',
-            )}
-          </>
+          </View>
         </SkeletonPlaceholder>
+        <View style={styles.detailsContainer}>
+          <SkeletonPlaceholder
+            speed={800}
+            enabled={loadingSkeleton}
+            backgroundColor={colorsLight.GRAY_02}
+            highlightColor={colorsLight.GRAY_05}>
+            <>
+              <Text style={styles.title}>{artWorkData?.data.title}</Text>
+              <Text style={styles.sectionTitle}>Description</Text>
+              {artWorkData?.data?.description &&
+              artWorkData?.data?.description?.length > 0 ? (
+                <View marginB-18>
+                  <HTML
+                    source={{html: artWorkData?.data.description || ''}}
+                    tagsStyles={htmlStyles}
+                  />
+                </View>
+              ) : (
+                <View marginB-18>
+                  <Text style={styles.sectionValue}>No description</Text>
+                </View>
+              )}
+              {renderSection(
+                'Artist',
+                artWorkData?.data.artist_display || 'No artist',
+                1,
+              )}
+              {renderSection(
+                'Place of Origin',
+                artWorkData?.data.place_of_origin || 'No origin',
+                2,
+              )}
+              {renderSection(
+                'Medium',
+                artWorkData?.data.medium_display || 'No medium',
+                3,
+              )}
+              {renderSection(
+                'Artwork Type',
+                artWorkData?.data?.artwork_type_title || 'No artwork type',
+                4,
+              )}
+              {renderSection(
+                'Copyright Notice',
+                artWorkData?.data?.copyright_notice || 'No copyright notice',
+                5,
+              )}
+              {renderSection(
+                'Department',
+                artWorkData?.data?.department_title || 'No department',
+                6,
+              )}
+              {renderListSection(
+                'Categories',
+                artWorkData?.data.category_titles,
+                'No Categories',
+              )}
+              {renderListSection(
+                'Terms',
+                artWorkData?.data.term_titles,
+                'No Terms',
+              )}
+              {renderListSection(
+                'Themes',
+                artWorkData?.data.theme_titles,
+                'No Themes',
+              )}
+            </>
+          </SkeletonPlaceholder>
+        </View>
       </View>
     </ScrollView>
   );
@@ -182,7 +183,6 @@ const styles = StyleSheet.create({
     backgroundColor: colorsLight.PRIMARY_COLOR,
   },
   detailsContainer: {
-    paddingHorizontal: 16,
     marginBottom: 20,
   },
   title: {
@@ -229,11 +229,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontStyle: 'normal',
   },
-  containerFavorite: {justifyContent: 'space-between'},
+  containerFavorite: {
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    paddingBottom: 16,
+    borderBottomColor: colorsLight.GRAY_05,
+  },
   textFavorite: {
-    fontSize: 16,
-    color: colorsLight.BLACK,
+    fontSize: 18,
+    color: colorsLight.GRAY_03,
     fontStyle: 'normal',
-    fontWeight: '500',
+    fontWeight: '800',
   },
 });

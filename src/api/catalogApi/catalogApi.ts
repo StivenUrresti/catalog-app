@@ -11,8 +11,8 @@ export const catalogApi = createApi({
     timeout: 30 * 1000,
   }),
   endpoints: build => ({
-    getAllArtworks: build.query<CatalogEntity, void>({
-      query: () => `${apiBase.endpoints.getArtworks}?limit=100`,
+    getAllArtworks: build.query<CatalogEntity, {page: number}>({
+      query: ({page}) => `${apiBase.endpoints.getArtworks}?page=${page}`,
     }),
     getArtWorksByCategory: build.query<ArtWorkEntity, number>({
       query: id =>
@@ -25,5 +25,8 @@ export const catalogApi = createApi({
   }),
 });
 
-export const {useGetAllArtworksQuery, useGetArtWorksByCategoryQuery} =
-  catalogApi;
+export const {
+  useGetAllArtworksQuery,
+  useGetArtWorksByCategoryQuery,
+  useLazyGetAllArtworksQuery,
+} = catalogApi;

@@ -10,7 +10,12 @@ import {View} from 'react-native-ui-lib';
 import {SearchBar} from '@/components';
 
 export const CatalogScreen = () => {
-  const {fetchingDataCatalog, dataCatalog} = useActions();
+  const {
+    isLoadingArtworkData,
+    itemsArtWork,
+    handleNextArtWork,
+    handleRefreshArtWorks,
+  } = useActions();
 
   const RenderItems = ({item}: {item: DataCatalogEntity}) => (
     <RenderItem item={item} />
@@ -18,19 +23,23 @@ export const CatalogScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {!fetchingDataCatalog && (
-        <View flex-1 padding-16>
-          <Text style={styles.title}>List of Artworks</Text>
-          <SearchBar style={styles.search} placeholder={'Search'} />
-          <FlatList
-            data={dataCatalog?.data}
-            keyExtractor={item => item.id.toString()}
-            showsVerticalScrollIndicator={false}
-            renderItem={RenderItems}
-            ListFooterComponent={<View height={80} />}
-          />
-        </View>
-      )}
+      <View centerH paddingH-16 marginV-14>
+        <Text style={styles.title}>List of Artworks</Text>
+        <SearchBar placeholder="buscar" />
+      </View>
+      <View flex-1 padding-16>
+        <FlatList
+          data={itemsArtWork}
+          keyExtractor={item => item.id.toString()}
+          showsVerticalScrollIndicator={false}
+          refreshing={isLoadingArtworkData}
+          onRefresh={handleRefreshArtWorks}
+          onEndReached={handleNextArtWork}
+          onEndReachedThreshold={0.7}
+          renderItem={RenderItems}
+          ListFooterComponent={<View height={80} />}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -62,7 +71,6 @@ const styles = StyleSheet.create({
   search: {
     marginVertical: 20,
   },
-  // Puedes añadir más estilos según tus necesidades
 });
 
 export default CatalogScreen;
