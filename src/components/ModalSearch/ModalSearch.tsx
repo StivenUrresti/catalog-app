@@ -11,27 +11,27 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {View} from 'react-native-ui-lib';
-import RenderItem from './RenderItem';
 import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
+import {useAppDispatch, useAppSelector} from '@/hooks/useRedux';
+import {selectSearch, setShow} from '@/slices/searchSlice';
 import {useActionsModalSearch} from './useActionsModalSearch';
+import RenderItem from './RenderItem';
 
-interface Props {
-  visible: boolean;
-  onClose: () => void;
-}
-
-export const ModalSearch = ({visible, onClose}: Props) => {
+export const ModalSearch = () => {
   const {handleOnchangeText, searchText, items} = useActionsModalSearch();
 
   const RenderItems = ({item}: {item: DataCatalogEntity}) => (
     <RenderItem item={item} />
   );
+  const {show} = useAppSelector(selectSearch);
+  const dispatch = useAppDispatch();
+
   return (
-    <Modal animationType="slide" transparent={false} visible={visible}>
+    <Modal animationType="slide" transparent={false} visible={show}>
       <SafeAreaView style={styles.container}>
         <View flex>
           <View row centerV paddingH-16 marginT-20>
-            <TouchableOpacity onPress={onClose}>
+            <TouchableOpacity onPress={() => dispatch(setShow(false))}>
               <BackArrow color={colorsLight.GRAY_03} />
             </TouchableOpacity>
             <TextInput

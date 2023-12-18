@@ -3,6 +3,7 @@ import {setupListeners} from '@reduxjs/toolkit/query';
 import loading from '@/slices/loadingSlice';
 import favorites from '@/slices/favoritesSlice';
 import tabBar from '@/slices/tabBarSlice';
+import search from '@/slices/searchSlice';
 import {catalogApi} from '@/api/catalogApi/catalogApi';
 
 const store = configureStore({
@@ -10,6 +11,7 @@ const store = configureStore({
     loading,
     favorites,
     tabBar,
+    search,
     [catalogApi.reducerPath]: catalogApi.reducer,
   },
   middleware: getDefaultMiddleware =>

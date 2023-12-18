@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {ActivityIndicator, Text} from '@react-native-material/core';
 import {useActions} from './useActions';
 import {colorsLight} from '@/theme/colorsLight';
@@ -9,7 +9,8 @@ import RenderItem from './RenderItem';
 import {View} from 'react-native-ui-lib';
 import {SearchBar} from '@/components';
 import {TabsHomeRoutes, TabsHomeScreenProps} from '@/types/tabRoutes';
-import {ModalSearch} from './ModalSearch';
+import {useAppDispatch} from '@/hooks/useRedux';
+import {setShow} from '@/slices/searchSlice';
 
 export const CatalogScreen =
   ({}: TabsHomeScreenProps<TabsHomeRoutes.CATALOG>) => {
@@ -25,15 +26,16 @@ export const CatalogScreen =
     const RenderItems = ({item}: {item: DataCatalogEntity}) => (
       <RenderItem item={item} />
     );
-
-    const [modal, setModal] = useState(false);
-    const toggleModal = () => setModal(!modal);
+    const dispatch = useAppDispatch();
 
     return (
       <SafeAreaView style={styles.container}>
         <View centerH paddingH-16 marginV-14>
           <Text style={styles.title}>List of Artworks</Text>
-          <SearchBar placeholder="buscar" onPress={() => toggleModal()} />
+          <SearchBar
+            placeholder="buscar"
+            onPress={() => dispatch(setShow(true))}
+          />
         </View>
         <View flex-1 paddingH-16>
           <FlatList
@@ -56,7 +58,6 @@ export const CatalogScreen =
               </View>
             }
           />
-          <ModalSearch visible={modal} onClose={toggleModal} />
         </View>
       </SafeAreaView>
     );

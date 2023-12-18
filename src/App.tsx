@@ -7,6 +7,7 @@ import StackNavigation from './navigation/stackNavigation';
 import {Loading} from './components';
 import store from './libraries/redux';
 import {loadFavoritesAsync} from './slices/favoritesSlice';
+import {ModalSearch} from './components/ModalSearch';
 
 store.dispatch(loadFavoritesAsync());
 
@@ -16,6 +17,7 @@ const App = () => {
       <SafeAreaProvider>
         <NavigationContainer>
           <Loading />
+          <ModalSearch />
           <StackNavigation />
         </NavigationContainer>
       </SafeAreaProvider>
