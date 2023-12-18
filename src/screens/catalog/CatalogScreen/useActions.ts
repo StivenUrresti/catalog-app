@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useLazyGetAllArtworksQuery} from '@/api/catalogApi/catalogApi';
+import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
 import {useAppDispatch} from '@/hooks/useRedux';
 import {addFavorite} from '@/slices/favoritesSlice';
 import {setHiddenTabBar} from '@/slices/tabBarSlice';
@@ -12,7 +13,7 @@ export const useActions = () => {
   const dispatch = useAppDispatch();
   const {navigate} = useNavigation();
   const [pageArtWorks, setPageArtWorks] = useState(1);
-  const [itemsArtWork, setItemsArtWork] = useState<any[]>([]);
+  const [itemsArtWork, setItemsArtWork] = useState<DataCatalogEntity[]>([]);
   const [isChanging, setIsChanging] = useState(false);
 
   const [triggerArtWorks, {isLoading: isLoadingArtworkData}] =

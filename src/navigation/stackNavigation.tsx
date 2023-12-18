@@ -8,6 +8,7 @@ import {DetailCatalogScreen} from '@/screens';
 import {Platform, TouchableOpacity} from 'react-native';
 import {colorsLight} from '@/theme/colorsLight';
 import {BackArrow} from '@/assets/svg';
+import {SearchScreen} from '@/screens/catalog';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -32,6 +33,25 @@ function StackNavigation() {
           headerLeftContainerStyle: {
             paddingLeft: Platform.OS === 'ios' ? 18 : 6,
           },
+          headerBackImage: () => (
+            <TouchableOpacity onPress={() => navigation.pop()}>
+              <BackArrow color={colorsLight.GRAY_03} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name={RootStackRoutes.SEARCH_SCREEN}
+        component={SearchScreen}
+        options={({navigation}) => ({
+          headerTitle: '',
+          headerTintColor: colorsLight.GRAY_03,
+          headerBackTitleVisible: false,
+          headerShadowVisible: false,
+          headerLeftContainerStyle: {
+            paddingLeft: Platform.OS === 'ios' ? 18 : 6,
+          },
+          headerShown: false,
           headerBackImage: () => (
             <TouchableOpacity onPress={() => navigation.pop()}>
               <BackArrow color={colorsLight.GRAY_03} />

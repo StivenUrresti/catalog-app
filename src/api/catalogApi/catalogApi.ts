@@ -23,6 +23,10 @@ export const catalogApi = createApi({
         dimensions,medium_display,category_titles,
         artist_title,theme_titles,artwork_type_title,department_title,term_titles,copyright_notice`,
     }),
+    getAllArtWorksToSearch: build.query<CatalogEntity, string>({
+      query: search =>
+        `${apiBase.endpoints.getArtworks}/search?q=${search}&fields=id,title,artist_display,date_display,image_id,place_of_origin`,
+    }),
   }),
 });
 
@@ -30,4 +34,5 @@ export const {
   useGetAllArtworksQuery,
   useGetArtWorksByCategoryQuery,
   useLazyGetAllArtworksQuery,
+  useLazyGetAllArtWorksToSearchQuery,
 } = catalogApi;

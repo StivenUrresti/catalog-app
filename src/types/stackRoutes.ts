@@ -5,12 +5,13 @@ import {TabsHomeParamList} from './tabRoutes';
 export enum RootStackRoutes {
   TABS_HOME = 'TABS_HOME',
   DETAIL_CATALOG_SCREEN = 'DETAIL_CATALOG_SCREEN',
+  SEARCH_SCREEN = 'SEARCH_SCREEN',
 }
 
 export type RootStackParamList = {
-  [RootStackRoutes.DETAIL_CATALOG_SCREEN]: {idArt: number};
-
   [RootStackRoutes.TABS_HOME]: NavigatorScreenParams<TabsHomeParamList>;
+  [RootStackRoutes.DETAIL_CATALOG_SCREEN]: {idArt: number};
+  [RootStackRoutes.SEARCH_SCREEN]: undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
