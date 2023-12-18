@@ -1,10 +1,18 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet, Platform} from 'react-native';
+import {TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {View as UiLibView} from 'react-native-ui-lib';
 import {TabsHomeRoutes} from '@/types/tabRoutes';
 
 import {colorsLight} from '@/theme/colorsLight';
 import {CatalogIcon, DotIcon, FavoriteIcon} from '@/assets/svg';
+import Animated, {
+  Easing,
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
+import {useAppSelector} from '@/hooks/useRedux';
+import {selectTabBar} from '@/slices/tabBarSlice';
 
 export function CustomTabBar({
   state,
@@ -15,6 +23,20 @@ export function CustomTabBar({
   descriptors: any;
   navigation: any;
 }) {
+  const {hiddenTabBar} = useAppSelector(selectTabBar);
+  const translateY = useSharedValue(hiddenTabBar ? 100 : 0);
+
+  translateY.value = withTiming(hiddenTabBar ? 100 : 0, {
+    duration: 320,
+    easing: Easing.out(Easing.ease),
+  });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: translateY.value}],
+    };
+  });
+
   const getIcon = (key: string) => {
     switch (key) {
       case TabsHomeRoutes.CATALOG:
@@ -27,7 +49,7 @@ export function CustomTabBar({
   };
 
   return (
-    <View style={[styles.container]}>
+    <Animated.View style={[styles.container, animatedStyle]}>
       {state.routes.map((route: any, index: number) => {
         const {options} = descriptors[route.key];
         const isFocused = state.index === index;
@@ -66,7 +88,7 @@ export function CustomTabBar({
           </TouchableOpacity>
         );
       })}
-    </View>
+    </Animated.View>
   );
 }
 

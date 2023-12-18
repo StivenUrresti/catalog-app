@@ -2,9 +2,11 @@
 import {useLazyGetAllArtworksQuery} from '@/api/catalogApi/catalogApi';
 import {useAppDispatch} from '@/hooks/useRedux';
 import {addFavorite} from '@/slices/favoritesSlice';
+import {setHiddenTabBar} from '@/slices/tabBarSlice';
 import {RootStackRoutes} from '@/types/stackRoutes';
 import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
+import {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 
 export const useActions = () => {
   const dispatch = useAppDispatch();
@@ -53,6 +55,15 @@ export const useActions = () => {
     });
   };
 
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const scrollY = event.nativeEvent.contentOffset.y;
+    if (scrollY > 0) {
+      dispatch(setHiddenTabBar(true));
+    } else {
+      dispatch(setHiddenTabBar(false));
+    }
+  };
+
   return {
     itemsArtWork,
     isLoadingArtworkData,
@@ -60,5 +71,6 @@ export const useActions = () => {
     goToDetail,
     handleNextArtWork,
     handleRefreshArtWorks,
+    handleScroll,
   };
 };

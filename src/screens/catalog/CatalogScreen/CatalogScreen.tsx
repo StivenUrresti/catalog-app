@@ -15,6 +15,7 @@ export const CatalogScreen = () => {
     itemsArtWork,
     handleNextArtWork,
     handleRefreshArtWorks,
+    handleScroll,
   } = useActions();
 
   const RenderItems = ({item}: {item: DataCatalogEntity}) => (
@@ -37,6 +38,7 @@ export const CatalogScreen = () => {
           onEndReached={handleNextArtWork}
           onEndReachedThreshold={0.7}
           renderItem={RenderItems}
+          onScroll={handleScroll}
           ListFooterComponent={<View height={80} />}
         />
       </View>
