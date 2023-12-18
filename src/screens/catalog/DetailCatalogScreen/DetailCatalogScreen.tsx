@@ -57,8 +57,10 @@ export const DetailCatalogScreen = ({
           enabled={loadingSkeleton}
           backgroundColor={colorsLight.GRAY_02}
           highlightColor={colorsLight.GRAY_05}>
-          <View row centerV marginV-16 style={styles.containerFavorite}>
-            <Text style={styles.textFavorite}>
+          <View row marginV-16 style={styles.containerFavorite}>
+            <Text
+              color={!like ? colorsLight.BLACK : colorsLight.ERROR}
+              style={styles.textFavorite}>
               {!like ? 'Add to Favorites' : 'It likes you'}
             </Text>
             {!like ? (
@@ -198,7 +200,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     color: colorsLight.GRAY_03,
-    fontWeight: 'bold',
     marginBottom: 4,
     fontStyle: 'normal',
   },
@@ -230,15 +231,14 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
   },
   containerFavorite: {
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
     paddingBottom: 16,
-    borderBottomColor: colorsLight.GRAY_05,
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf: 'flex-end',
   },
   textFavorite: {
     fontSize: 18,
-    color: colorsLight.GRAY_03,
     fontStyle: 'normal',
-    fontWeight: '800',
+    marginRight: 8,
   },
 });

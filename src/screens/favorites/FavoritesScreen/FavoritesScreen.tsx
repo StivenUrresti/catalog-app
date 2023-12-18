@@ -25,6 +25,11 @@ export const FavoritesScreen = () => {
           showsVerticalScrollIndicator={false}
           renderItem={RenderItems}
           ListFooterComponent={<View height={80} />}
+          ListEmptyComponent={
+            <View flex-1 center>
+              <Text style={styles.emptyText}>No favorites yet</Text>
+            </View>
+          }
         />
       </View>
     </SafeAreaView>
@@ -37,10 +42,18 @@ const styles = StyleSheet.create({
     backgroundColor: colorsLight.BACKGROUND_SCREEN_COLOR,
   },
   title: {
-    color: colorsLight.BLACK,
+    color: colorsLight.PRIMARY_COLOR,
     fontSize: 18,
     fontStyle: 'normal',
     fontWeight: 'bold',
     marginVertical: 14,
+    alignSelf: 'center',
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    color: colorsLight.GRAY_03,
   },
 });

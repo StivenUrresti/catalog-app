@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '900',
     marginVertical: 12,
+    color: colorsLight.PRIMARY_COLOR,
   },
   search: {
     marginVertical: 20,

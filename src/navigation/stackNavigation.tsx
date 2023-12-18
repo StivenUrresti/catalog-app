@@ -26,7 +26,7 @@ function StackNavigation() {
         options={({navigation}) => ({
           headerTitle: '',
           headerBackTitle: 'Art Works',
-          headerTintColor: colorsLight.SECONDARY_TEXT_COLOR,
+          headerTintColor: colorsLight.GRAY_03,
           headerBackTitleVisible: true,
           headerShadowVisible: false,
           headerLeftContainerStyle: {
@@ -34,7 +34,7 @@ function StackNavigation() {
           },
           headerBackImage: () => (
             <TouchableOpacity onPress={() => navigation.pop()}>
-              <BackArrow color={colorsLight.SECONDARY_TEXT_COLOR} />
+              <BackArrow color={colorsLight.GRAY_03} />
             </TouchableOpacity>
           ),
         })}

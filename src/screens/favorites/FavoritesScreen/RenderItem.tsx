@@ -43,8 +43,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 16,
+    marginVertical: 8,
   },
   textContainer: {
     flex: 1,

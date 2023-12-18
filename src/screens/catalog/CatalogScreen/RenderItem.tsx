@@ -13,7 +13,7 @@ const RenderItem = ({item}: Props) => {
   const {goToDetail} = useActions();
   return (
     <TouchableOpacity
-      key={item.id}
+      key={`${item.id + item.title}`}
       style={styles.container}
       onPress={() => goToDetail(item.id)}>
       <View style={styles.textContainer}>
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+    marginVertical: 8,
   },
   textContainer: {
     flex: 1,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 4,
-    color: colorsLight.BLACK,
+    color: colorsLight.PRIMARY_COLOR,
     fontStyle: 'normal',
   },
   indicatorText: {
