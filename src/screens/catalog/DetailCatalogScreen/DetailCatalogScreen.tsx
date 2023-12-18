@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     color: colorsLight.BLACK,
     marginBottom: 8,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: colorsLight.GRAY_03,
     fontWeight: 'bold',
     marginBottom: 4,

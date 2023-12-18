@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 4,
     color: colorsLight.BLACK,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
   },
   author: {
-    fontSize: 16,
+    fontSize: 14,
     color: colorsLight.BLACK,
     fontStyle: 'normal',
   },
