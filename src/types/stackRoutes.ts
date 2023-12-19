@@ -5,7 +5,6 @@ import {TabsHomeParamList} from './tabRoutes';
 export enum RootStackRoutes {
   TABS_HOME = 'TABS_HOME',
   DETAIL_CATALOG_SCREEN = 'DETAIL_CATALOG_SCREEN',
-  SEARCH_SCREEN = 'SEARCH_SCREEN',
 }
 
 export type RootStackParamList = {
