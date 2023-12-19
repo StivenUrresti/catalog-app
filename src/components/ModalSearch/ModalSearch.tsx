@@ -12,27 +12,30 @@ import {
 } from 'react-native';
 import {View} from 'react-native-ui-lib';
 import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
-import {useAppDispatch, useAppSelector} from '@/hooks/useRedux';
-import {selectSearch, setShow} from '@/slices/searchSlice';
 import {useActionsModalSearch} from './useActionsModalSearch';
-import RenderItem from './RenderItem';
+import RenderItem from '../../screens/catalog/CatalogScreen/RenderItem';
 import {Text} from '@react-native-material/core';
 
 export const ModalSearch = () => {
-  const {handleOnchangeText, searchText, items} = useActionsModalSearch();
+  const {
+    show,
+    searchText,
+    items,
+    handleOnchangeText,
+    handleGoBack,
+    navigateToDetail,
+  } = useActionsModalSearch();
 
-  const RenderItems = ({item}: {item: DataCatalogEntity}) => (
-    <RenderItem item={item} />
+  const renderItems = ({item}: {item: DataCatalogEntity}) => (
+    <RenderItem item={item} navigateToDetail={navigateToDetail} />
   );
-  const {show} = useAppSelector(selectSearch);
-  const dispatch = useAppDispatch();
 
   return (
     <Modal animationType="slide" transparent={false} visible={show}>
       <SafeAreaView style={styles.container}>
         <View flex>
           <View row centerV paddingH-16 marginT-20>
-            <TouchableOpacity onPress={() => dispatch(setShow(false))}>
+            <TouchableOpacity onPress={handleGoBack}>
               <BackArrow color={colorsLight.GRAY_03} />
             </TouchableOpacity>
             <TextInput
@@ -53,11 +56,11 @@ export const ModalSearch = () => {
           <View flex-1 paddingH-16>
             <FlatList
               data={items}
-              keyExtractor={(item: any, index: number) =>
-                (index + item).toString()
+              keyExtractor={(item: DataCatalogEntity, index: number) =>
+                `${item.id}-${index}`
               }
               showsVerticalScrollIndicator={false}
-              renderItem={RenderItems}
+              renderItem={renderItems}
               ListEmptyComponent={
                 <View center>
                   {searchText.length > 0 ? (

@@ -6,10 +6,11 @@ import {addFavorite} from '@/slices/favoritesSlice';
 import {setHiddenTabBar} from '@/slices/tabBarSlice';
 import {RootStackRoutes} from '@/types/stackRoutes';
 import {useNavigation} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
-import {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
+import {useEffect, useRef, useState} from 'react';
+import {FlatList, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 
 export const useActions = () => {
+  const flatListRef = useRef<FlatList>(null);
   const dispatch = useAppDispatch();
   const {navigate} = useNavigation();
   const [pageArtWorks, setPageArtWorks] = useState(1);
@@ -52,7 +53,7 @@ export const useActions = () => {
     dispatch(addFavorite(item));
   };
 
-  const goToDetail = (idArt: number) => {
+  const navigateToDetail = (idArt: number) => {
     navigate(RootStackRoutes.DETAIL_CATALOG_SCREEN, {
       idArt,
     });
@@ -71,10 +72,12 @@ export const useActions = () => {
     itemsArtWork,
     isLoadingArtworkData,
     isChanging,
+    flatListRef,
     addToFavorites,
-    goToDetail,
+    navigateToDetail,
     handleNextArtWork,
     handleRefreshArtWorks,
     handleScroll,
+    dispatch,
   };
 };

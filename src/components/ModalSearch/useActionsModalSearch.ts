@@ -1,20 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useLazyGetAllArtWorksToSearchQuery} from '@/api/catalogApi/catalogApi';
 import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
-import {useAppDispatch} from '@/hooks/useRedux';
-import {setShow} from '@/slices/searchSlice';
+import {useAppDispatch, useAppSelector} from '@/hooks/useRedux';
+import {selectSearch, setShow} from '@/slices/searchSlice';
 import {RootStackRoutes} from '@/types/stackRoutes';
-import {useNavigation, useIsFocused} from '@react-navigation/native'; // Import useIsFocused
+import {useNavigation} from '@react-navigation/native'; // Import useIsFocused
 import {useEffect, useState} from 'react';
 
 export const useActionsModalSearch = () => {
-  const handleOnchangeText = (text: string) => setSearchText(text);
+  const {navigate} = useNavigation();
+  const {show} = useAppSelector(selectSearch);
+  const dispatch = useAppDispatch();
+  const [triggersArtWork] = useLazyGetAllArtWorksToSearchQuery();
+
   const [searchText, setSearchText] = useState('');
   const [items, setItems] = useState<DataCatalogEntity[]>([]);
-  const isFocused = useIsFocused();
-  const [triggersArtWork] = useLazyGetAllArtWorksToSearchQuery();
-  const {navigate} = useNavigation();
-  const dispatch = useAppDispatch();
+
   useEffect(() => {
     async function getData() {
       if (searchText.length > 0) {
@@ -30,7 +31,13 @@ export const useActionsModalSearch = () => {
     }
 
     getData();
-  }, [searchText, isFocused]);
+  }, [searchText]);
+
+  const handleOnchangeText = (text: string) => setSearchText(text);
+  const handleGoBack = () => {
+    dispatch(setShow(false));
+    setSearchText('');
+  };
 
   const navigateToDetail = (id: number) => {
     navigate(RootStackRoutes.DETAIL_CATALOG_SCREEN, {idArt: id});
@@ -38,5 +45,12 @@ export const useActionsModalSearch = () => {
     setSearchText('');
   };
 
-  return {searchText, items, handleOnchangeText, navigateToDetail};
+  return {
+    show,
+    searchText,
+    items,
+    handleOnchangeText,
+    navigateToDetail,
+    handleGoBack,
+  };
 };

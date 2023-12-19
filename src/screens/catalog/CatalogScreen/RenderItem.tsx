@@ -3,19 +3,18 @@ import {colorsLight} from '@/theme/colorsLight';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useActions} from './useActions';
 
 interface Props {
   item: DataCatalogEntity;
+  navigateToDetail: (id: number) => void;
 }
 
-const RenderItem = ({item}: Props) => {
-  const {goToDetail} = useActions();
+const RenderItem = ({item, navigateToDetail}: Props) => {
   return (
     <TouchableOpacity
       key={`${item.id + item.title}`}
       style={styles.container}
-      onPress={() => goToDetail(item.id)}>
+      onPress={() => navigateToDetail(item.id)}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.indicatorText}>{'Artist: '}</Text>

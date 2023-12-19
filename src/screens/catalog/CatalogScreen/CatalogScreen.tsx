@@ -5,12 +5,12 @@ import {ActivityIndicator, Text} from '@react-native-material/core';
 import {useActions} from './useActions';
 import {colorsLight} from '@/theme/colorsLight';
 import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
-import RenderItem from './RenderItem';
 import {View} from 'react-native-ui-lib';
 import {SearchBar} from '@/components';
 import {TabsHomeRoutes, TabsHomeScreenProps} from '@/types/tabRoutes';
-import {useAppDispatch} from '@/hooks/useRedux';
 import {setShow} from '@/slices/searchSlice';
+import {useFocusEffect} from '@react-navigation/native';
+import RenderItem from '@/screens/catalog/CatalogScreen/RenderItem';
 
 export const CatalogScreen =
   ({}: TabsHomeScreenProps<TabsHomeRoutes.CATALOG>) => {
@@ -18,30 +18,40 @@ export const CatalogScreen =
       isLoadingArtworkData,
       itemsArtWork,
       isChanging,
+      flatListRef,
       handleNextArtWork,
       handleRefreshArtWorks,
       handleScroll,
+      navigateToDetail,
+      dispatch,
     } = useActions();
 
     const RenderItems = ({item}: {item: DataCatalogEntity}) => (
-      <RenderItem item={item} />
+      <RenderItem item={item} navigateToDetail={navigateToDetail} />
     );
-    const dispatch = useAppDispatch();
+
+    useFocusEffect(
+      React.useCallback(() => {
+        flatListRef?.current?.scrollToOffset({animated: true, offset: 0});
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []),
+    );
 
     return (
       <SafeAreaView style={styles.container}>
         <View centerH paddingH-16 marginV-14>
           <Text style={styles.title}>List of Artworks</Text>
           <SearchBar
-            placeholder="buscar"
+            placeholder="Search"
             onPress={() => dispatch(setShow(true))}
           />
         </View>
         <View flex-1 paddingH-16>
           <FlatList
+            ref={flatListRef}
             data={itemsArtWork}
-            keyExtractor={(item: any, index: number) =>
-              (index + item).toString()
+            keyExtractor={(item: DataCatalogEntity, index: number) =>
+              `${item.id}-${index}`
             }
             showsVerticalScrollIndicator={false}
             refreshing={isLoadingArtworkData}
