@@ -3,26 +3,20 @@ import {colorsLight} from '@/theme/colorsLight';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useNavigation} from '@react-navigation/native';
-import {RootStackRoutes} from '@/types/stackRoutes';
-import {useAppDispatch} from '@/hooks/useRedux';
-import {setShow} from '@/slices/searchSlice';
+import {useActionsModalSearch} from './useActionsModalSearch';
 
 interface Props {
   item: DataCatalogEntity;
 }
 
 const RenderItem = ({item}: Props) => {
-  const {navigate} = useNavigation();
-  const dispatch = useAppDispatch();
+  const {navigateToDetail} = useActionsModalSearch();
+
   return (
     <TouchableOpacity
       key={`${item.id + item.title}`}
       style={styles.container}
-      onPress={() => {
-        navigate(RootStackRoutes.DETAIL_CATALOG_SCREEN, {idArt: item.id});
-        dispatch(setShow(false));
-      }}>
+      onPress={() => navigateToDetail(item.id)}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.indicatorText}>{'Artist: '}</Text>

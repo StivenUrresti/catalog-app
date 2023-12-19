@@ -16,6 +16,7 @@ import {useAppDispatch, useAppSelector} from '@/hooks/useRedux';
 import {selectSearch, setShow} from '@/slices/searchSlice';
 import {useActionsModalSearch} from './useActionsModalSearch';
 import RenderItem from './RenderItem';
+import {Text} from '@react-native-material/core';
 
 export const ModalSearch = () => {
   const {handleOnchangeText, searchText, items} = useActionsModalSearch();
@@ -57,6 +58,19 @@ export const ModalSearch = () => {
               }
               showsVerticalScrollIndicator={false}
               renderItem={RenderItems}
+              ListEmptyComponent={
+                <View center>
+                  {searchText.length > 0 ? (
+                    <Text style={styles.titleStartSearching}>
+                      {`No results for "${searchText}"`}
+                    </Text>
+                  ) : (
+                    <Text style={styles.titleStartSearching}>
+                      {'Start searching'}
+                    </Text>
+                  )}
+                </View>
+              }
             />
           </View>
         </View>
@@ -78,5 +92,9 @@ const styles = StyleSheet.create({
     borderColor: colorsLight.GRAY_03,
     borderRadius: 12,
     height: 40,
+  },
+  titleStartSearching: {
+    marginBottom: 16,
+    marginVertical: 16,
   },
 });
