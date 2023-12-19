@@ -4,7 +4,7 @@ import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
 import {useAppDispatch, useAppSelector} from '@/hooks/useRedux';
 import {selectSearch, setShow} from '@/slices/searchSlice';
 import {RootStackRoutes} from '@/types/stackRoutes';
-import {useNavigation} from '@react-navigation/native'; // Import useIsFocused
+import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 
 export const useActionsModalSearch = () => {
