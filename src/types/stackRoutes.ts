@@ -11,7 +11,6 @@ export enum RootStackRoutes {
 export type RootStackParamList = {
   [RootStackRoutes.TABS_HOME]: NavigatorScreenParams<TabsHomeParamList>;
   [RootStackRoutes.DETAIL_CATALOG_SCREEN]: {idArt: number};
-  [RootStackRoutes.SEARCH_SCREEN]: undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
