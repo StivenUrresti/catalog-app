@@ -3,14 +3,14 @@ import {HeartIcon} from '@/assets/svg';
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {useActions} from './useActions';
 
 interface Props {
   item: DataCatalogEntity;
+  handleDislike: (id: number) => void;
+  goToDetailScreen: (id: number) => void;
 }
 
-const RenderItem = ({item}: Props) => {
-  const {handleDislike, goToDetailScreen} = useActions();
+const RenderItem = ({item, handleDislike, goToDetailScreen}: Props) => {
   return (
     <TouchableOpacity
       style={styles.container}

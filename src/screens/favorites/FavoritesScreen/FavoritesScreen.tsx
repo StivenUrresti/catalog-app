@@ -10,10 +10,14 @@ import RenderItem from './RenderItem';
 import {useActions} from './useActions';
 
 export const FavoritesScreen = () => {
-  const {favoritesData} = useActions();
+  const {favoritesData, handleDislike, goToDetailScreen} = useActions();
 
   const RenderItems = ({item}: {item: IArtWorkEntity}) => (
-    <RenderItem item={item} />
+    <RenderItem
+      item={item}
+      handleDislike={handleDislike}
+      goToDetailScreen={goToDetailScreen}
+    />
   );
   return (
     <SafeAreaView style={styles.container}>
