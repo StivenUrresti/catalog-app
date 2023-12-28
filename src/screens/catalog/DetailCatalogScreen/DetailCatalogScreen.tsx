@@ -69,7 +69,7 @@ export const DetailCatalogScreen = ({
             <Text
               color={!like ? colorsLight.BLACK : colorsLight.ERROR}
               style={styles.textFavorite}>
-              {!like ? 'Add to Favorites' : 'It likes you'}
+              {!like ? 'Add to Favorites' : 'You like this'}
             </Text>
             {!like ? (
               <TouchableOpacity onPress={() => handleLike(artWorkData?.data)}>

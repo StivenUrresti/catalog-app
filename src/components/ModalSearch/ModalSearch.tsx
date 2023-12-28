@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import {BackArrow} from '@/assets/svg';
 import {colorsLight} from '@/theme/colorsLight';
 import React from 'react';
