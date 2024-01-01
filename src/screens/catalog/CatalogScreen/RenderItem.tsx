@@ -1,6 +1,6 @@
 import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
 import {colorsLight} from '@/theme/colorsLight';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
@@ -10,6 +10,31 @@ interface Props {
 }
 
 const RenderItem = ({item, navigateToDetail}: Props) => {
+  const renderFlatListImage = (data: DataCatalogEntity | undefined) => {
+    if (data?.image_id) {
+      return (
+        <FastImage
+          source={{
+            uri: `https://www.artic.edu/iiif/2/${data.image_id}/full/843,/0/default.jpg`,
+            priority: FastImage.priority.normal,
+          }}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.stretch}
+        />
+      );
+    } else {
+      return (
+        <FastImage
+          source={require('@/assets/img/empty_img_four.png')}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.stretch}
+        />
+      );
+    }
+  };
+
+  const renderImage = useMemo(() => renderFlatListImage(item), [item]);
+
   return (
     <TouchableOpacity
       key={`${item.id + item.title}`}
@@ -22,24 +47,7 @@ const RenderItem = ({item, navigateToDetail}: Props) => {
         <Text style={styles.indicatorText}>{'Place Origin: '}</Text>
         <Text style={styles.author}>{item.place_of_origin || 'No Place'}</Text>
       </View>
-      <View style={styles.imageContainer}>
-        {item.image_id ? (
-          <FastImage
-            source={{
-              uri: `https://www.artic.edu/iiif/2/${item.image_id}/full/843,/0/default.jpg`,
-              priority: FastImage.priority.normal,
-            }}
-            style={styles.image}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-        ) : (
-          <FastImage
-            source={require('@/assets/img/empty_img_four.png')}
-            style={styles.image}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-        )}
-      </View>
+      <View style={styles.imageContainer}>{renderImage}</View>
     </TouchableOpacity>
   );
 };

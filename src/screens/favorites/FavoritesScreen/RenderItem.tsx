@@ -1,6 +1,6 @@
+import React, {useMemo} from 'react';
 import {DataCatalogEntity} from '@/api/catalogApi/entities/catalogEntity';
 import {HeartIcon} from '@/assets/svg';
-import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
@@ -11,28 +11,35 @@ interface Props {
 }
 
 const RenderItem = ({item, handleDislike, goToDetailScreen}: Props) => {
+  const renderFastImage = (data: DataCatalogEntity | undefined) => {
+    if (data?.image_id) {
+      return (
+        <FastImage
+          source={{
+            uri: `https://www.artic.edu/iiif/2/${data?.image_id}/full/843,/0/default.jpg`,
+          }}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.stretch}
+        />
+      );
+    } else {
+      return (
+        <FastImage
+          source={require('@/assets/img/empty_img_four.png')}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.stretch}
+        />
+      );
+    }
+  };
+
+  const fastImageComponent = useMemo(() => renderFastImage(item), [item]);
+
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => goToDetailScreen(item.id)}>
-      <View style={styles.imageContainer}>
-        {item.image_id ? (
-          <FastImage
-            source={{
-              uri: `https://www.artic.edu/iiif/2/${item.image_id}/full/843,/0/default.jpg`,
-              priority: FastImage.priority.normal,
-            }}
-            style={styles.image}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-        ) : (
-          <FastImage
-            source={require('@/assets/img/empty_img_four.png')}
-            style={styles.image}
-            resizeMode={FastImage.resizeMode.stretch}
-          />
-        )}
-      </View>
+      <View style={styles.imageContainer}>{fastImageComponent}</View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.indicatorText}>{'Artist: '}</Text>
