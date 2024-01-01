@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {colorsLight} from '@/theme/colorsLight';
 import {RootStackRoutes, RootStackScreenProps} from '@/types/stackRoutes';
@@ -9,6 +9,7 @@ import HTML from 'react-native-render-html';
 import {Text} from '@react-native-material/core';
 import {HeartIcon, HeartOutlineIcon} from '@/assets/svg';
 import {View} from 'react-native-ui-lib';
+import {ArtWorkEntity} from '@/api/catalogApi/entities/catalogEntity';
 
 export const DetailCatalogScreen = ({
   route: {
@@ -32,6 +33,33 @@ export const DetailCatalogScreen = ({
     },
   };
 
+  const renderFastImage = (data: ArtWorkEntity | undefined) => {
+    if (data?.data.image_id) {
+      return (
+        <FastImage
+          source={{
+            uri: `https://www.artic.edu/iiif/2/${data?.data.image_id}/full/843,/0/default.jpg`,
+          }}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.stretch}
+        />
+      );
+    } else {
+      return (
+        <FastImage
+          source={require('@/assets/img/empty_img_four.png')}
+          style={styles.image}
+          resizeMode={FastImage.resizeMode.stretch}
+        />
+      );
+    }
+  };
+
+  const fastImageComponent = useMemo(
+    () => renderFastImage(artWorkData),
+    [artWorkData],
+  );
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <View>
@@ -42,21 +70,7 @@ export const DetailCatalogScreen = ({
           enabled={loadingSkeleton}
           backgroundColor={colorsLight.GRAY_02}
           highlightColor={colorsLight.GRAY_05}>
-          {artWorkData?.data.image_id ? (
-            <FastImage
-              source={{
-                uri: `https://www.artic.edu/iiif/2/${artWorkData?.data.image_id}/full/843,/0/default.jpg`,
-              }}
-              style={styles.image}
-              resizeMode={FastImage.resizeMode.stretch}
-            />
-          ) : (
-            <FastImage
-              source={require('@/assets/img/empty_img_four.png')}
-              style={styles.image}
-              resizeMode={FastImage.resizeMode.stretch}
-            />
-          )}
+          {fastImageComponent}
         </SkeletonPlaceholder>
       </View>
       <View paddingH-16>
